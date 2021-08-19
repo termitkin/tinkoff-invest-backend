@@ -4,7 +4,7 @@ const parseRequest = (req, client) => {
   let myData;
 
   if (clientType === 'telegramApp') {
-    myData = req.body.message.text;
+    myData = req.body.message.text.replace(/_[a-z]/g, (symbols) => symbols[1].toUpperCase());
   } else if (clientType === 'webApp') {
     myData = req.body.myData;
   }
