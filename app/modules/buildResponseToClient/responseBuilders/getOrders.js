@@ -44,7 +44,7 @@ const buildResponseForTelegram = (data) => {
 
   let response = '';
 
-  response += data.map((order) => {
+  data.forEach((order) => {
     const {
       name,
       operation,
@@ -63,7 +63,7 @@ const buildResponseForTelegram = (data) => {
     const requestedCount = lot * requestedLots;
     const priceTotal = price * requestedCount;
 
-    return `
+    response += `
       ${ticker} ${name}
       ${dic.requestedLots}: ${requestedLots}, ${dic.executedLots}: ${executedLots}
       ${dic.price}: ${price} ${currencySigns[currency]}
@@ -74,7 +74,7 @@ const buildResponseForTelegram = (data) => {
     `.replace(/^ +/gim, '');
   });
 
-  return JSON.stringify(response);
+  return response.trim();
 };
 
 const buildResponseForWebApp = (data) => {
