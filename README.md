@@ -45,7 +45,7 @@ secretToken - токен Тинькофф Инвестиций
 ### Команда для сборки бекенда в докер образ
 
 ```
-docker build -t termitkin/invest_backend
+docker build -t termitkin/tinkoff-invest-backend:latest .
 ```
 
 ### Команда для запуска контейнера с бекендом
