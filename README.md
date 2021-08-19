@@ -1,4 +1,4 @@
-# invest_backend
+# tinkoff-invest-backend
 
 Это бекенд для двух клиентов — телеграм бота и сайта
 
@@ -31,11 +31,10 @@
 - Стакан заявок
 - Избранное
 
-### Бекенду нужно передать четыре переменные окружения
+### Бекенду нужно передать три переменные окружения
 
 ```
-APP_NAME=Имя сервиса
-BOT_TOKEN=токен телеграм бота
+BOT_TOKEN - токен телеграм бота
 OWNER_ID - id владельца бота в телеграме. В телеграме все боты публичные. То есть обращаться к ним может кто угодно. Поэтому нужно указывать id владельца, чтобы управлять ботом мог только владелец бота
 secretToken - токен Тинькофф Инвестиций
 ```
@@ -51,5 +50,5 @@ docker build -t termitkin/tinkoff-invest-backend:latest .
 ### Команда для запуска контейнера с бекендом
 
 ```
-docker run -d -p 3025:3025 -p 3026:3026 --restart unless-stopped --name invest_bot -e APP_NAME=Invest_backend -e secretToken=TINKOFF_SECRET_TOKEN -e BOT_TOKEN=TELEGRAM_BOT_TOKEN -e OWNER_ID=TELEGRAM_OWNER_ID termitkin/invest_bot:latest
+docker run -d -p 3025:3025 -p 3026:3026 --restart unless-stopped --name tinkoff-invest-backend -e secretToken=TINKOFF_SECRET_TOKEN -e BOT_TOKEN=TELEGRAM_BOT_TOKEN -e OWNER_ID=TELEGRAM_OWNER_ID termitkin/tinkoff-invest-backend:latest
 ```
