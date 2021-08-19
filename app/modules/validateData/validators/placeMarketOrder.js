@@ -9,7 +9,7 @@ const placeMarketOrder = (params) => {
   if (!regexCheckNumbers.test(count)) {
     return { ok: false, errorName: 'incorrectParamType' };
   }
-  if (!/^(Sell|Buy)$/.test(operation)) {
+  if (!/^(sell|buy)$/i.test(operation)) {
     return { ok: false, errorName: 'incorrectParamType' };
   }
 

@@ -9,7 +9,7 @@ const placeLimitOrder = (params) => {
   if (!regexCheckNumbers.test(count) || !regexCheckNumbers.test(price)) {
     return { ok: false, errorName: 'incorrectParamType' };
   }
-  if (!/^(Sell|Buy)$/.test(operation)) {
+  if (!/^(sell|buy)$/i.test(operation)) {
     return { ok: false, errorName: 'incorrectParamType' };
   }
 

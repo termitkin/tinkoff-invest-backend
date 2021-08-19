@@ -2,6 +2,7 @@ const api = require('../../utils/api');
 
 const getFromCache = require('../../utils/cache/getFromCache');
 const putToCache = require('../../utils/cache/putToCache');
+const capitalizeFirstLetter = require('../../utils/capitalizeFirstLetter');
 
 const placeLimitOrder = async (myDataParams) => {
   const [ticker, lots, operation, price] = myDataParams;
@@ -28,7 +29,7 @@ const placeLimitOrder = async (myDataParams) => {
         ...(await api.limitOrder({
           figi,
           lots: Number.parseInt(lots, 10),
-          operation,
+          operation: capitalizeFirstLetter(operation),
           price: Number.parseFloat(price, 10),
         })),
       },
