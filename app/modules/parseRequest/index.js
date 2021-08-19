@@ -47,6 +47,16 @@ const parseRequest = (req, client) => {
     request.myDataParams = [...params.slice(1)];
     return request;
   }
+  if (myData.startsWith('/getUsd')) {
+    request.requestType = 'getCurrencyPrice';
+    request.myDataParams = ['USD'];
+    return request;
+  }
+  if (myData.startsWith('/getEur')) {
+    request.requestType = 'getCurrencyPrice';
+    request.myDataParams = ['EUR'];
+    return request;
+  }
   if (myData.startsWith('/getHelp')) {
     request.requestType = 'getHelp';
     request.myDataParams = [];
