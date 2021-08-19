@@ -11,15 +11,16 @@
 ### Список команд для бота
 
 ```
-/getBalance - Узнать баланс (доход за всё время)
-/getPortfolio - Получить ожидаемый доход по каждой бумаге в портфеле
-/getOrders - Получить список активных заявок
-/getCurrencyPrice USD|EUR - Получить посленюю цену валюты
-/getStockPrice %ticker% - Получить последнюю цену бумаги по тикеру
-/cancel_order %order_id% - Отменить заявку. order_id можно взять из /getOrders
-/placeLimitOrder %ticker% %count% %sell|buy% %price% - Разместить лимитную заявку. Порядок параметров важен, регистр нет. Пример - /place_limit_order ozon 1 sell 4200
-/placeMarketOrder %ticker% %count% %sell|buy% - Разместить рыночную заявку. Порядок параметров важен, регистр нет. Пример - /place_market_order ozon 1 sell
-/getHelp - Вывести список всех команд
+/get_balance - Узнать баланс (доход за всё время)
+/get_portfolio - Ожидаемый доход по каждой бумаге в портфеле
+/get_orders - Список активных заявок
+/get_usd - Последняя цена доллара
+/get_eur - Последняя цена евро
+/get_stock_price - Последняя цена бумаги по тикеру. Пример - /get_stock_price AAPL
+/cancel_order - Отменить заявку. Пример - /cancel_order 25446301566. Номер заявки можно взять из /get_orders
+/place_limit_order - Разместить лимитную заявку. Порядок параметров важен. Пример - /place_limit_order ozon 1 sell 4200
+/place_market_order - Разместить рыночную заявку. Порядок параметров важен. Пример - /place_market_order ozon 1 sell
+/get_help - Вывести список всех команд
 ```
 
 ### Функции сайта
