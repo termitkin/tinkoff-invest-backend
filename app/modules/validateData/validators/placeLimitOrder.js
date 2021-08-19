@@ -1,16 +1,16 @@
 const placeLimitOrder = (params) => {
   if (params.length !== 4) {
-    return 'incorrectParamsQuantity';
+    return { ok: false, errorName: 'incorrectParamsQuantity' };
   }
 
   const [_, count, operation, price] = params;
   const regexCheckNumbers = /^[0-9\.]+$/;
 
   if (!regexCheckNumbers.test(count) || !regexCheckNumbers.test(price)) {
-    return 'incorrectParamType';
+    return { ok: false, errorName: 'incorrectParamType' };
   }
   if (!/^(Sell|Buy)$/.test(operation)) {
-    return 'incorrectParamType';
+    return { ok: false, errorName: 'incorrectParamType' };
   }
 
   return { ok: true };

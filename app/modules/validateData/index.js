@@ -11,14 +11,10 @@ const validateData = ({ requestType, myDataParams }) => {
   if (validators.hasOwnProperty(requestType)) {
     const validation = validators[requestType](myDataParams);
 
-    if (validation.ok) {
-      return true;
+    if (!validation.ok) {
+      throw new Error(validation.errorName);
     }
-
-    throw new Error(validation);
   }
-
-  return true;
 };
 
 module.exports = validateData;

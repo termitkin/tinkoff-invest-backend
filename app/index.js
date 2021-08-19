@@ -12,12 +12,12 @@ if (cacheFile) {
 }
 
 const app = express();
-app.listen(3005, () => console.log(`app started on port: 3005`));
+app.listen(3025, () => console.log(`app started on port: 3025`));
 
 app.use('/api', main);
 app.use('*', notFound);
 
-const wss = new WebSocket({ port: 3006 });
+const wss = new WebSocket({ port: 3026 });
 const clients = new Map();
 
 wss.on('connection', (client) => handleConnectionOpened(clients, client));

@@ -50,5 +50,5 @@ docker build -t termitkin/invest_backend
 ### Команда для запуска контейнера с бекендом
 
 ```
-docker run -d -p 3005:3005 -p 3006:3006 --restart unless-stopped --name invest_bot -e APP_NAME=Invest_backend -e secretToken=TINKOFF_SECRET_TOKEN -e BOT_TOKEN=TELEGRAM_BOT_TOKEN -e OWNER_ID=TELEGRAM_OWNER_ID termitkin/invest_bot:latest
+docker run -d -p 3025:3025 -p 3026:3026 --restart unless-stopped --name invest_bot -e APP_NAME=Invest_backend -e secretToken=TINKOFF_SECRET_TOKEN -e BOT_TOKEN=TELEGRAM_BOT_TOKEN -e OWNER_ID=TELEGRAM_OWNER_ID termitkin/invest_bot:latest
 ```

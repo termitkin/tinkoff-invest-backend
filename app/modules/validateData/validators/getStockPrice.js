@@ -1,6 +1,6 @@
 const getStockPrice = (params) => {
   if (typeof params !== 'string') {
-    return 'incorrectParamsType';
+    return { ok: false, errorName: 'incorrectParamsType' };
   }
   return { ok: true };
 };

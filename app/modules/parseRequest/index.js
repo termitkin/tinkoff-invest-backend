@@ -1,5 +1,6 @@
-const parseRequest = (req, state) => {
-  const { clientType } = state;
+const parseRequest = (req, client) => {
+  const { clientType } = client;
+  const request = {};
   let myData;
 
   if (clientType === 'telegramApp') {
@@ -9,65 +10,65 @@ const parseRequest = (req, state) => {
   }
 
   if (myData.startsWith('/getBalance')) {
-    state.requestType = 'getBalance';
-    state.myDataParams = [];
-    return state;
+    request.requestType = 'getBalance';
+    request.myDataParams = [];
+    return request;
   }
   if (myData.startsWith('/getOrders')) {
-    state.requestType = 'getOrders';
-    state.myDataParams = [];
-    return state;
+    request.requestType = 'getOrders';
+    request.myDataParams = [];
+    return request;
   }
   if (myData.startsWith('/getPortfolioCurrencies')) {
-    state.requestType = 'getPortfolioCurrencies';
-    state.myDataParams = [];
-    return state;
+    request.requestType = 'getPortfolioCurrencies';
+    request.myDataParams = [];
+    return request;
   }
   if (myData.startsWith('/getPortfolio')) {
-    state.requestType = 'getPortfolio';
-    state.myDataParams = [];
-    return state;
+    request.requestType = 'getPortfolio';
+    request.myDataParams = [];
+    return request;
   }
   if (myData.startsWith('/getInstrumentInfo')) {
-    state.requestType = 'getInstrumentInfo';
+    request.requestType = 'getInstrumentInfo';
     const params = myData.split(' ');
-    state.myDataParams = [...params.slice(1)];
-    return state;
+    request.myDataParams = [...params.slice(1)];
+    return request;
   }
   if (myData.startsWith('/getStockPrice')) {
-    state.requestType = 'getStockPrice';
+    request.requestType = 'getStockPrice';
     const params = myData.split(' ');
-    state.myDataParams = params[1];
-    return state;
+    request.myDataParams = params[1];
+    return request;
   }
   if (myData.startsWith('/getCurrencyPrice')) {
-    state.requestType = 'getCurrencyPrice';
+    request.requestType = 'getCurrencyPrice';
     const params = myData.split(' ');
-    state.myDataParams = [...params.slice(1)];
-    return state;
+    request.myDataParams = [...params.slice(1)];
+    return request;
   }
   if (myData.startsWith('/getHelp')) {
-    state.requestType = 'getHelp';
-    state.myDataParams = [];
-    return state;
+    request.requestType = 'getHelp';
+    request.myDataParams = [];
+    return request;
   }
   if (myData.startsWith('/placeLimitOrder')) {
-    state.requestType = 'placeLimitOrder';
+    request.requestType = 'placeLimitOrder';
     const params = myData.split(' ');
-    state.myDataParams = [...params.slice(1)];
-    return state;
+    request.myDataParams = [...params.slice(1)];
+    return request;
   }
   if (myData.startsWith('/placeMarketOrder')) {
-    state.requestType = 'placeMarketOrder';
+    request.requestType = 'placeMarketOrder';
     const params = myData.split(' ');
-    state.myDataParams = [...params.slice(1)];
-    return state;
+    request.myDataParams = [...params.slice(1)];
+    return request;
   }
   if (myData.startsWith('/cancelOrder')) {
-    state.requestType = 'cancelOrder';
+    request.requestType = 'cancelOrder';
     const params = myData.split(' ');
-    state.myDataParams = [...params.slice(1)];
-    return state;
+    request.myDataParams = [...params.slice(1)];
+    return request;
   }
 
   throw new Error('cantIdentifyDataType');

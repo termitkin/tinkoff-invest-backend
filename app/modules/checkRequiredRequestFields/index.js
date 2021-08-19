@@ -3,11 +3,9 @@ const checkRequiredRequestFields = (req) => {
   const chatId = req?.body?.message?.chat?.id;
   const myData = req?.body?.myData;
 
-  if ((chatId && chatMessage) || myData) {
-    return true;
+  if (!(chatId && chatMessage) && !myData) {
+    throw new Error('noRequiredData');
   }
-
-  throw new Error('noRequiredData');
 };
 
 module.exports = checkRequiredRequestFields;

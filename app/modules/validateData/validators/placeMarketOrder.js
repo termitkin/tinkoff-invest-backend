@@ -1,16 +1,16 @@
 const placeMarketOrder = (params) => {
   if (params.length !== 3) {
-    return 'incorrectParamsQuantity';
+    return { ok: false, errorName: 'incorrectParamsQuantity' };
   }
 
   const [_, count, operation] = params;
   const regexCheckNumbers = /^[0-9]+$/;
 
   if (!regexCheckNumbers.test(count)) {
-    return 'incorrectParamType';
+    return { ok: false, errorName: 'incorrectParamType' };
   }
   if (!/^(Sell|Buy)$/.test(operation)) {
-    return 'incorrectParamType';
+    return { ok: false, errorName: 'incorrectParamType' };
   }
 
   return { ok: true };

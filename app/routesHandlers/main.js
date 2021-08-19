@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const identifyClientType = require('../modules/identifyClientType');
+const identifyClient = require('../modules/identifyClient');
 const auth = require('../modules/auth');
 const checkRequiredRequestFields = require('../modules/checkRequiredRequestFields');
 const parseRequest = require('../modules/parseRequest');
@@ -10,23 +10,46 @@ const errorHandler = require('../modules/errorHandler');
 
 const getStockData = require('../requestsHandlers');
 const buildResponseToClient = require('../modules/buildResponseToClient');
+const sendMessageToTelegram = require('../modules/sendMessageToTelegram');
 
 const router = express.Router();
+
+const { errors } = require('../utils/constants/index');
 
 router.use(cors());
 router.options('*', cors());
 router.use(express.json());
 
 const main = async (req, res) => {
-  await new Promise((resolve) => resolve(identifyClientType(req)))
-    .then((state) => auth(req) && state)
-    .then((state) => checkRequiredRequestFields(req) && state)
-    .then((state) => parseRequest(req, state) && state)
-    .then((state) => validateData(state) && state)
-    .then(async (state) => ({ ...state, ...(await getStockData(state)) }))
-    .then((state) => buildResponseToClient(state))
-    .then((responseToClient) => res.status(200).json(responseToClient))
-    .catch((err) => errorHandler(err, res));
+  const client = identifyClient(req);
+
+  if (!client.ok) {
+    const { statusCode, text } = errors[client.errorName];
+    res.status(statusCode).json(JSON.stringify({ ok: false, data: { text } }));
+  }
+
+  try {
+    auth(req);
+    checkRequiredRequestFields(req);
+
+    const parsedRequest = parseRequest(req, client);
+
+    validateData(parsedRequest);
+
+    const responseToClient = buildResponseToClient({
+      data: (await getStockData(parsedRequest)).data,
+      requestType: parsedRequest.requestType,
+      clientType: client.clientType,
+    });
+
+    if (client.clientType === 'webApp') {
+      res.status(200).json(responseToClient);
+    } else if (client.clientType === 'telegramApp') {
+      await sendMessageToTelegram(responseToClient, client.chatId, res);
+    }
+  } catch (err) {
+    await errorHandler(err, res, client);
+  }
 };
 
 router.post('/', main);

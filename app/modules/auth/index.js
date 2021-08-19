@@ -9,8 +9,6 @@ const auth = (req) => {
   if (!(ownerId === userId || TELEGRAM_BOT_TOKEN === mySecret)) {
     throw new Error('permissionDenied');
   }
-
-  return true;
 };
 
 module.exports = auth;
