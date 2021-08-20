@@ -22,7 +22,7 @@ const getTextToSend = ({ type, positions }) => {
 
   positions.forEach((item) => {
     textToSend += `${item.ticker} `;
-    textToSend += `${dic.expectedYield}: ${item.averagePositionPriceValue} ${currencySigns[item.currency]}, `;
+    textToSend += `${dic.expectedYield}: ${item.expectedYieldValue} ${currencySigns[item.currency]}, `;
 
     if (type === 'currencies') {
       textToSend += `${dic.balance}: ${item.balance}, `;
