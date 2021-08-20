@@ -1,12 +1,9 @@
 # tinkoff-invest-backend
 
-Это бекенд для двух клиентов — телеграм бота и сайта
+Это бекенд для двух клиентов — телеграм бота и сайта. Сайт можно не запускать, если он не нужен. Бекенд можно использовать только для телеграм бота. Репозиторий с фронтендом [здесь](https://github.com/termitkin/tinkoff-invest-frontend)
 
-- [Список команд бота](#Список-команд-для-бота)
-- [Функции сайта](#Функции-сайта)
-- [Переменные окружения](#Бекенду-нужно-передать-четыре-переменные-окружения)
-- [Сборка образа](#Команда-для-сборки-бекенда-в-докер-образ)
-- [Запуск контейнера](#Команда-для-запуска-контейнера-с-бекендом)
+- Докер образ [бекенда](https://hub.docker.com/repository/docker/termitkin/tinkoff-invest-backend)
+- Докер образ [фронтенда](https://hub.docker.com/repository/docker/termitkin/tinkoff-invest-frontend)
 
 ### Список команд для бота
 
@@ -31,6 +28,19 @@
 - Стакан заявок
 - Избранное
 
+### Связать телеграм бота с этим бекендом
+
+1. Нужно запустить бекенд
+2. Нужно создать бота. Это можно сделать написав в личку [@BotFather](https://t.me/BotFather)
+3. Получить у @BotFather API Token (здесь он называется BOT_TOKEN)
+4. Открыть в браузере эту ссылку подставив свои данные: `https://api.telegram.org/botBOT_TOKEN/setWebhook?url=https://mysite.com/api/BOT_TOKEN&ip_address=my_server_ip_address`
+
+### Запуск фронтенда и бекенда вместе
+
+1. Скачать [docker-compose.yml](https://gist.github.com/termitkin/966ebfb4cfa71057cdbde19bbab0afb6)
+2. Рядом с `docker-compose.yml` нужно положить файл `.env`, в котором должны быть три переменные: BOT_TOKEN, OWNER_ID и secretToken
+3. Выполнить `docker-compose up -d`
+
 ### Бекенду нужно передать три переменные окружения
 
 ```
@@ -38,8 +48,6 @@ BOT_TOKEN - токен телеграм бота
 OWNER_ID - id владельца бота в телеграме. В телеграме все боты публичные. То есть обращаться к ним может кто угодно. Поэтому нужно указывать id владельца, чтобы управлять ботом мог только владелец бота
 secretToken - токен Тинькофф Инвестиций
 ```
-
-Если запускать сразу и бекенд и фронтенд через docker-compose, то можно положить рядом с docker-compose.yml файлик .env и записать переменные в этот файл
 
 ### Команда для сборки бекенда в докер образ
 
@@ -51,4 +59,38 @@ docker build -t termitkin/tinkoff-invest-backend:latest .
 
 ```
 docker run -d -p 3025:3025 -p 3026:3026 --restart unless-stopped --name tinkoff-invest-backend -e secretToken=TINKOFF_SECRET_TOKEN -e BOT_TOKEN=TELEGRAM_BOT_TOKEN -e OWNER_ID=TELEGRAM_OWNER_ID termitkin/tinkoff-invest-backend:latest
+```
+
+### Блоки в конфиге nginx, которые нужны для контейнеров с бекендом и фронтендом:
+
+```
+# Tinkoff invest frontend
+location ^~ /tinkoff-invest/BOT_TOKEN {
+  proxy_pass http://localhost:3500/;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection 'upgrade';
+  proxy_set_header Host $host;
+  proxy_cache_bypass $http_upgrade;
+}
+
+# Tinkoff invest api
+location ^~ /api/BOT_TOKEN {
+  proxy_pass http://localhost:3025/api;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection 'upgrade';
+  proxy_set_header Host $host;
+  proxy_cache_bypass $http_upgrade;
+}
+
+# Tinkoff invest ws
+location ^~ /ws/BOT_TOKEN {
+  proxy_pass http://localhost:3026/;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection 'upgrade';
+  proxy_set_header Host $host;
+  proxy_cache_bypass $http_upgrade;
+}
 ```
