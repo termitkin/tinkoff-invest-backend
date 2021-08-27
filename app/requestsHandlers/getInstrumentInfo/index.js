@@ -26,13 +26,19 @@ const getInstrumentInfo = async (myDataParams) => {
       if (!dataFromCache) {
         instrumentData = await api.searchOne({ ticker: instrumentId });
 
+        const instrumentType = instrumentData.type;
+        const quantityInOneLot = instrumentData.lot;
+        const currencySign = CONSTANTS[instrumentData.currency];
+
+        instrumentData = { ...instrumentData, instrumentType, quantityInOneLot, currencySign };
+
         figi = instrumentData.figi;
 
         putToCache(instrumentId, {
           ...instrumentData,
-          instrumentType: instrumentData.type,
-          quantityInOneLot: instrumentData.lot,
-          currencySign: CONSTANTS[instrumentData.currency],
+          instrumentType,
+          quantityInOneLot,
+          currencySign,
         });
       } else {
         figi = dataFromCache.figi;
