@@ -37,7 +37,7 @@ const main = async (req, res) => {
     validateData(parsedRequest);
 
     const responseToClient = buildResponseToClient({
-      data: (await getStockData(parsedRequest)).data,
+      dataFromStock: await getStockData(parsedRequest),
       requestType: parsedRequest.requestType,
       clientType: client.clientType,
     });
