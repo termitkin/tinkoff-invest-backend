@@ -8,7 +8,7 @@ const cancelOrder = async (orderId) => {
     const errorMessage = e?.payload?.message;
 
     if (errorMessage) {
-      throw new Error(`cancelOrder: ${errorMessage}`);
+      return { ok: true, error: true, data: { text: errorMessage } };
     }
 
     throw new Error('В cancelOrder что-то пошло не так');

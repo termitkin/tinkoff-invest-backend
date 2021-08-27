@@ -38,7 +38,7 @@ const placeLimitOrder = async (myDataParams) => {
     const errorMessage = e?.payload?.message;
 
     if (errorMessage) {
-      throw new Error(`placeLimitOrder: ${errorMessage}`);
+      return { ok: true, error: true, data: { text: errorMessage } };
     }
 
     throw new Error('В placeLimitOrder что-то пошло не так');

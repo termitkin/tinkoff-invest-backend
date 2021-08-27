@@ -62,7 +62,7 @@ const getInstrumentInfo = async (myDataParams) => {
     const errorMessage = e?.payload?.message;
 
     if (errorMessage) {
-      throw new Error(`getInstrumentInfo: ${errorMessage}`);
+      return { ok: true, error: true, data: { text: errorMessage } };
     }
 
     throw new Error('В getInstrumentInfo что-то пошло не так');

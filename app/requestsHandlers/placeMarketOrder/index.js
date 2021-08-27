@@ -37,7 +37,7 @@ const placeMarketOrder = async (myDataParams) => {
     const errorMessage = e?.payload?.message;
 
     if (errorMessage) {
-      throw new Error(`placeMarketOrder: ${errorMessage}`);
+      return { ok: true, error: true, data: { text: errorMessage } };
     }
 
     throw new Error('В placeMarketOrder что-то пошло не так');

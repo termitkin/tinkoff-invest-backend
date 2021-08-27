@@ -31,7 +31,7 @@ const getStockPrice = async (ticker) => {
     const errorMessage = e?.payload?.message;
 
     if (errorMessage) {
-      throw new Error(`getStockPrice: ${errorMessage}`);
+      return { ok: true, error: true, data: { text: errorMessage } };
     }
 
     throw new Error('В getStockPrice что-то пошло не так');

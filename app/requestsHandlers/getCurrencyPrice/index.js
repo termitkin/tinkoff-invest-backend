@@ -11,7 +11,7 @@ const getCurrencyPrice = async (curr) => {
     const errorMessage = e?.payload?.message;
 
     if (errorMessage) {
-      throw new Error(`getCurrencyPrice: ${errorMessage}`);
+      return { ok: true, error: true, data: { text: errorMessage } };
     }
 
     throw new Error('В getCurrencyPrice что-то пошло не так');

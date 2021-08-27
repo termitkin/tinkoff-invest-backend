@@ -9,7 +9,7 @@ const getPortfolioCurrencies = async () => {
     const errorMessage = e?.payload?.message;
 
     if (errorMessage) {
-      throw new Error(`getPortfolioCurrencies: ${errorMessage}`);
+      return { ok: true, error: true, data: { text: errorMessage } };
     }
     throw new Error('В getPortfolioCurrencies что-то пошло не так');
   }
