@@ -1,6 +1,4 @@
 const express = require('express');
-const cors = require('cors');
-
 const identifyClient = require('../modules/identifyClient');
 const auth = require('../modules/auth');
 const checkRequiredRequestFields = require('../modules/checkRequiredRequestFields');
@@ -16,8 +14,6 @@ const router = express.Router();
 
 const { errors } = require('../utils/constants/index');
 
-router.use(cors());
-router.options('*', cors());
 router.use(express.json());
 
 const main = async (req, res) => {
