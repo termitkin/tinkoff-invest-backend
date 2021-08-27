@@ -11,7 +11,7 @@ const getStockPrice = async (ticker) => {
     const dataFromCache = getFromCache(ticker, ['figi', 'name', 'currency']);
 
     if (!dataFromCache) {
-      const data = await api.searchOne({ ticker: ticker });
+      const data = await api.searchOne({ ticker });
 
       figi = data.figi;
       name = data.name;
