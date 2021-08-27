@@ -6,13 +6,14 @@ const handleConnectionOpened = require('./webSockets/handleConnectionOpened');
 const { writeFileSync, readFileSync, existsSync } = require('fs');
 const cache = require('./utils/cache/cache');
 const cacheFile = existsSync('cache.json') && JSON.parse(readFileSync('cache.json'));
+const getCurrentDate = require('./utils/getCurrentDate');
 
 if (cacheFile) {
   cache.instruments = cacheFile.instruments;
 }
 
 const app = express();
-app.listen(3025, () => console.log(`app started on port: 3025`));
+app.listen(3025, () => console.log(`app started on port: 3025 ${getCurrentDate()}`));
 
 app.use('/api', main);
 app.use('*', notFound);
