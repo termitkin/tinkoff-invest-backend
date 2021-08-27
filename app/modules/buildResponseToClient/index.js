@@ -12,5 +12,13 @@ const responseBuilders = {
   placeMarketOrder: require('./responseBuilders/placeMarketOrder'),
 };
 
-const buildResponseToClient = ({ data, requestType, clientType }) => responseBuilders[requestType](data, clientType);
+const buildResponseToClient = ({ dataFromStock, requestType, clientType }) => {
+  const { ok, error, data } = dataFromStock;
+
+  if (error) {
+    return JSON.stringify({ ok, error, data });
+  }
+
+  return responseBuilders[requestType](data, clientType);
+};
 module.exports = buildResponseToClient;
